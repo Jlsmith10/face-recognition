@@ -25,19 +25,21 @@ def process_image():
     # Convert to grayscale
     gray_geisel_img = cv2.cvtColor(geisel_img, cv2.COLOR_BGR2GRAY)
     
-    curr_size = gray_geisel_img.shape
-    new_size = (curr_size[0] // 2, curr_size[1] // 2)
+    orig_size = gray_geisel_img.shape
 
-    print("Curr size: ", curr_size)
+    print("orig size: ", orig_size)
+
+    half_geisel = cv2.resize(gray_geisel_img, (0,0), fx=0.5, fy=0.5)
+    new_size = half_geisel.shape
+
     print("New size: ", new_size)
 
-    half_geisel = cv2.resize(gray_geisel_img, new_size)
 
     center = (new_size[0] // 2, new_size[1] // 2)
     top_left = (center[0] - 50, center[1] - 50)
     bottom_right = (center[0] + 50, center[1] + 50)
 
-    rect_geisel = cv2.rectangle(half_geisel, top_left, bottom_right, color=0)
+    rect_geisel = cv2.rectangle(half_geisel, top_left, bottom_right, color=255,     thickness=5)
 
     cv2.imwrite("rect_geisel.jpg", rect_geisel)
     
