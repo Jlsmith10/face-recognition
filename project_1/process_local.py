@@ -14,10 +14,33 @@ All the above steps should be in one function called process_image()
 """
 
 # TODO: Import OpenCV
+import cv2
 
 
 # TODO: Edit this function
 def process_image():
+    # Read in geisel image
+    geisel_img = cv2.imread("geisel.jpg")
+    
+    # Convert to grayscale
+    gray_geisel_img = cv2.cvtColor(geisel_img, cv2.COLOR_BGR2GRAY)
+    
+    curr_size = gray_geisel_img.shape
+    new_size = (curr_size[0] // 2, curr_size[1] // 2)
+
+    print("Curr size: ", curr_size)
+    print("New size: ", new_size)
+
+    half_geisel = cv2.resize(gray_geisel_img, new_size)
+
+    center = (new_size[0] // 2, new_size[1] // 2)
+    top_left = (center[0] - 50, center[1] - 50)
+    bottom_right = (center[0] + 50, center[1] + 50)
+
+    rect_geisel = cv2.rectangle(half_geisel, top_left, bottom_right, color=0)
+
+    cv2.imwrite("rect_geisel.jpg", rect_geisel)
+    
     return
 
 # Just prints 'Hello World! to screen.
@@ -27,7 +50,7 @@ def hello_world():
 
 # TODO: Call process_image function.
 def main():
-    hello_world()
+    process_image()
     return
 
 
