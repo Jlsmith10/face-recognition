@@ -38,8 +38,8 @@ def process_image():
 
 
     center = (new_size[0] // 2, new_size[1] // 2)
-    top_left = (center[0] - 50, center[1] - 50)
-    bottom_right = (center[0] + 50, center[1] + 50)
+    top_left = (center[1] - 50, center[0] - 50)
+    bottom_right = (center[1] + 50, center[0] + 50)
 
     rect_geisel = cv2.rectangle(half_geisel, top_left, bottom_right, color=255,     thickness=5)
 
