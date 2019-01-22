@@ -13,46 +13,41 @@ Now modify this code to process a local image and do the following:
 All the above steps should be in one function called process_image()
 """
 
-# TODO: Import OpenCV
 import cv2
 
 
-# TODO: Edit this function
 def process_image():
     # Read in geisel image
     geisel_img = cv2.imread("geisel.jpg")
-    
+
     # Convert to grayscale
     gray_geisel_img = cv2.cvtColor(geisel_img, cv2.COLOR_BGR2GRAY)
-    
+
     orig_size = gray_geisel_img.shape
 
-    print("orig size: ", orig_size)
+    half_geisel = cv2.resize(gray_geisel_img, (0, 0), fx=0.5, fy=0.5)
 
-    half_geisel = cv2.resize(gray_geisel_img, (0,0), fx=0.5, fy=0.5)
-    
     cv2.imwrite("half_geisel.jpg", half_geisel)
     new_size = half_geisel.shape
 
-    print("New size: ", new_size)
-
-
     center = (new_size[0] // 2, new_size[1] // 2)
+
     top_left = (center[1] - 50, center[0] - 50)
     bottom_right = (center[1] + 50, center[0] + 50)
 
-    rect_geisel = cv2.rectangle(half_geisel, top_left, bottom_right, color=255,     thickness=5)
+    rect_geisel = cv2.rectangle(
+        half_geisel, top_left, bottom_right, color=255, thickness=5)
 
-    cv2.imwrite("rect_geisel.jpg", rect_geisel)
-    
-    return
+    cv2.imwrite("geisel-bw-rectangle.jpg", rect_geisel)
 
-# Just prints 'Hello World! to screen.
+
 def hello_world():
     print('Hello World!')
     return
 
 # TODO: Call process_image function.
+
+
 def main():
     process_image()
     return
