@@ -30,6 +30,8 @@ def process_image():
     print("orig size: ", orig_size)
 
     half_geisel = cv2.resize(gray_geisel_img, (0,0), fx=0.5, fy=0.5)
+    
+    cv2.imwrite("half_geisel.jpg", half_geisel)
     new_size = half_geisel.shape
 
     print("New size: ", new_size)
