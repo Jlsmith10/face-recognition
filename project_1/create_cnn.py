@@ -42,20 +42,42 @@ Modify this code to write a LeNet with the following requirements:
     output 10-dimensional vector (This is specified through units.)
 """
 # TODO: Import other layers as necessary. (Conv2D, MaxPooling2D)
-from keras.layers import Input, Dense
-from keras.models import Model
+from keras.layers import Input, Dense, Flatten
+from keras.layers.convolutional import Conv2D, MaxPooling2D
+from keras.models import Model, Sequential
 
-# TODO: Currently, sets input dimension to be 784x1. Change to 32x32x1
-inputs = Input(shape=(784,))
+model = Sequential()
 
-# A layer instance is callable on a tensor, and returns a tensor
-x = Dense(64, activation='relu')(inputs)
-x = Dense(64, activation='relu')(x)
-predictions = Dense(10, activation='softmax')(x)
+# C1
+model.add(Conv2D(6, kernel_size=(5, 5),
+                 strides=(1, 1),
+                 activation='sigmoid',
+                 input_shape=(32, 32, 1)))
 
-# This creates a model that includes the Input layer and three Dense layers
-model = Model(inputs=inputs, outputs=predictions)
+# S2
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# C3
+model.add(Conv2D(16, kernel_size=(5, 5),
+                 strides=(1, 1),
+                 activation='sigmoid'))
+
+# S4
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# C5
+model.add(Conv2D(120, kernel_size=(5, 5),
+                 strides=(1, 1),
+                 activation='sigmoid'))
+
+# Flatten the last convolutional layer so it's 1D
+model.add(Flatten())
+
+# F6
+model.add(Dense(84, activation='tanh'))
+
+# F7
+model.add(Dense(10, activation='softmax'))
 
 # Prints model architecture
 model.summary()
-
