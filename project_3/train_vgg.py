@@ -120,6 +120,7 @@ def main():
     """
 
     # TODO: Save model weights
+    model.save('weights.h5')
 
     print('model weights saved.')
     return
