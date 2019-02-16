@@ -29,6 +29,16 @@ BATCH_SIZE = 16
 NUM_CLASSES = 19
 
 
+class TestCallback(Callback):
+    def __init__(self, test_data):
+        self.test_data = test_data
+
+    def on_epoch_end(self, epoch, logs={}):
+        x, y = self.test_data
+        loss, acc = self.model.evaluate(x, y, verbose=0)
+        print('\nTesting loss: {}, acc: {}\n'.format(loss, acc))
+
+
 def load_model():
     # TODO: use VGG16 to load lower layers of vgg16 network and declare it as base_model
     # TODO: use 'imagenet' for weights, include_top=False, (IMG_H, IMG_W, NUM_CHANNELS) for input_shape
@@ -52,7 +62,7 @@ def load_model():
 
     model.add(Dense(19))
 
-    #model = Model(inputs=base_model.input, outputs=predictions)
+    # model = Model(inputs=base_model.input, outputs=predictions)
     print('Build model')
     model.summary()
 
@@ -109,12 +119,13 @@ def main():
     num_batches = num_images // BATCH_SIZE
     print("There are ", num_batches, " batches")
 
-    model.fit(x=X_train, y=Y_train, epochs=NUM_EPOCHS, batch_size=BATCH_SIZE)
+    model.fit(x=X_train, y=Y_train, epochs=NUM_EPOCHS, batch_size=BATCH_SIZE,
+              validation_data=(X_val, Y_val))
     """
     for e in range(NUM_EPOCHS):
         for i in range(num_batches):
             X_curr_batch = X_train[i*BATCH_SIZE:(i+1)*BATCH_SIZE]
-            Y_curr_batch = Y_train[i*BATCH_SIZE:(i+1)*BATCH_SIZE]
+            Y_curr_batch = Y_train[*BATCH_SIZE:(i+1)*BATCH_SIZE]
 
             model.fit(x=X_curr_batch, y=Y_curr_batch)
     """
