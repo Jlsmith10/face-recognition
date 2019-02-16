@@ -46,38 +46,76 @@ from keras.layers import Input, Dense, Flatten
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.models import Model, Sequential
 
-model = Sequential()
+use_sequential = False
 
-# C1
-model.add(Conv2D(6, kernel_size=(5, 5),
-                 strides=(1, 1),
-                 activation='sigmoid',
-                 input_shape=(32, 32, 1)))
+if(use_sequential):
+    model = Sequential()
 
-# S2
-model.add(MaxPooling2D(pool_size=(2, 2)))
+    # C1
+    model.add(Conv2D(6, kernel_size=(5, 5),
+                     strides=(1, 1),
+                     activation='sigmoid',
+                     input_shape=(32, 32, 1)))
 
-# C3
-model.add(Conv2D(16, kernel_size=(5, 5),
-                 strides=(1, 1),
-                 activation='sigmoid'))
+    # S2
+    model.add(MaxPooling2D(pool_size=(2, 2)))
 
-# S4
-model.add(MaxPooling2D(pool_size=(2, 2)))
+    # C3
+    model.add(Conv2D(16, kernel_size=(5, 5),
+                     strides=(1, 1),
+                     activation='sigmoid'))
 
-# C5
-model.add(Conv2D(120, kernel_size=(5, 5),
-                 strides=(1, 1),
-                 activation='sigmoid'))
+    # S4
+    model.add(MaxPooling2D(pool_size=(2, 2)))
 
-# Flatten the last convolutional layer so it's 1D
-model.add(Flatten())
+    # C5
+    model.add(Conv2D(120, kernel_size=(5, 5),
+                     strides=(1, 1),
+                     activation='sigmoid'))
 
-# F6
-model.add(Dense(84, activation='tanh'))
+    # Flatten the last convolutional layer so it's 1D
+    model.add(Flatten())
 
-# F7
-model.add(Dense(10, activation='softmax'))
+    # F6
+    model.add(Dense(84, activation='tanh'))
+
+    # F7
+    model.add(Dense(10, activation='softmax'))
+
+else:
+    inputs = Input(shape=(32, 32, 1))
+
+    # C1
+    c1 = Conv2D(6, kernel_size=(5, 5),
+                strides=(1, 1),
+                activation='sigmoid',
+                input_shape=(32, 32, 1))(inputs)
+
+    # S2
+    s2 = MaxPooling2D(pool_size=(2, 2))(c1)
+
+    # C3
+    c3 = Conv2D(16, kernel_size=(5, 5),
+                strides=(1, 1),
+                activation='sigmoid')(s2)
+
+    # S4
+    s4 = MaxPooling2D(pool_size=(2, 2))(c3)
+
+    # C5
+    c5 = Conv2D(120, kernel_size=(5, 5),
+                strides=(1, 1),
+                activation='sigmoid')(s4)
+
+    # Flatten the last convolutional layer so it's 1D
+
+    # F6
+    f6 = Dense(84, activation='tanh')(c5)
+
+    # F7
+    predictions = Dense(10, activation='softmax')(f6)
+
+    model = Model(inputs=inputs, outputs=predictions)
 
 # Prints model architecture
 model.summary()
