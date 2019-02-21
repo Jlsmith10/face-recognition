@@ -114,10 +114,15 @@ def main():
                 # [OPTIONAL]: At this point you only have a number to display,
                 # you could add some extra code to convert your number to a
                 # name
-                result_to_display = prediction
+                result_label = prediction["label"]
+                result_confidence = prediction["confidence"]
 
-                cv2.putText(frame, str(result_to_display),
+                cv2.putText(frame, str(result_label),
                             (10, 30), FONT, 1, (0, 255, 0), 2)
+
+                cv2.putText(frame, str(result_confidence),
+                            (50, 30), FONT, 1, (0, 255, 0), 2)
+
                 cv2.imshow('Face Image for Classification', frame)
                 cv2.waitKey()
                 break
