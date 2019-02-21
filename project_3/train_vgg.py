@@ -46,12 +46,11 @@ def load_model():
 
     model.add(Flatten())
 
-    model.add(Dense(256))
+    model.add(Dense(256, activation='relu'))
 
     model.add(Dropout(rate=0.5))
 
-    model.add(Dense(19))
-
+    model.add(Dense(19, activation='softmax'))
     # model = Model(inputs=base_model.input, outputs=predictions)
     print('Build model')
     model.summary()
