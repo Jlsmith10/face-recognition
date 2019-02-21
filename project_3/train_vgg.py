@@ -112,7 +112,7 @@ def main():
     model.fit(x=X_train, y=Y_train, epochs=NUM_EPOCHS, batch_size=BATCH_SIZE,
               validation_data=(X_val, Y_val))
 
-    # TODO: Save model weights
+    # Save model weights
     model.save('weights.h5')
     print('model weights saved.')
     return

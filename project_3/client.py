@@ -59,9 +59,9 @@ def request_from_server(img):
 
 def main():
     # 1. Start running the camera.
-    # TODO: Initialize face detector
-
-
+    # Initialize face detector
+    face_cascade = cv2.CascadeClassifier(
+        '/usr/local/share/opencv4/haarcascades/haarcascade_frontalface_alt.xml')
 
     # Initialize camera and update parameters
     camera = PiCamera()
@@ -78,16 +78,17 @@ def main():
 
     # 2. Detect a face, display it, and get confirmation from user.
     for frame in camera.capture_continuous(
-                    rawCapture,
-                    format='bgr',
-                    use_video_port=True):
+            rawCapture,
+            format='bgr',
+            use_video_port=True):
 
         # Get image array from frame
         frame = frame.array
-        img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        # TODO: Use face detector to get faces.
+        # Use face detector to get faces.
         # Be sure to save the faces in a variable called 'faces'
+        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
         for (x, y, w, h) in faces:
             print('==================================')
@@ -103,6 +104,7 @@ def main():
                 print('Let\'s see who you are...')
 
                 # TODO: Get label and confidence using request_from_server
+                prediction = request_from_server(gray[x:x+w, y:y+h])
 
                 print('New result found!')
 
@@ -111,8 +113,10 @@ def main():
                 # [OPTIONAL]: At this point you only have a number to display,
                 # you could add some extra code to convert your number to a
                 # name
+                result_to_display = prediction
 
-                cv2.putText(frame, str(result_to_display), (10, 30), FONT, 1, (0, 255, 0), 2)
+                cv2.putText(frame, str(result_to_display),
+                            (10, 30), FONT, 1, (0, 255, 0), 2)
                 cv2.imshow('Face Image for Classification', frame)
                 cv2.waitKey()
                 break
