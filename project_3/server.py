@@ -25,7 +25,7 @@ app = Flask(__name__)
 CORS(app)                               # Allow CORS (Cross Origin Requests)
 
 # TODO: Load the model from the weights file.
-MODEL =  load_model(''); """ put model here"""
+MODEL =  load_model('weight.h5:'); """ put model here"""
 
 
 def classify(path_to_image):

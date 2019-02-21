@@ -30,13 +30,14 @@ def request_from_server(img):
     :param img: Image array to be classified.
     :returns: Returns a dictionary containing label and cofidence.
     """
-    # URL or PUBLIC DNS to your server
-    URL = ""
+    # PUBLIC DNS to your server
+    URL = "ec2-52-25-152-42.us-west-2.compute.amazonaws.com"
 
     # File name so that it can be temporarily stored.
     temp_image_name = 'temp.jpg'
 
-    # TODO: Save image with name stored in 'temp_image_name'
+    # Save image with name stored in 'temp_image_name'
+    cv2.imwrite(temp_image_name, img)
 
     # Reopen image and encode in base64
     # Open binary file in read mode
@@ -59,6 +60,8 @@ def request_from_server(img):
 def main():
     # 1. Start running the camera.
     # TODO: Initialize face detector
+
+
 
     # Initialize camera and update parameters
     camera = PiCamera()
