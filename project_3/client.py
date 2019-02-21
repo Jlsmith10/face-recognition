@@ -104,7 +104,7 @@ def main():
                 print('Let\'s see who you are...')
 
                 # TODO: Get label and confidence using request_from_server
-                prediction = request_from_server(gray[x:x+w, y:y+h])[0]
+                prediction = request_from_server(gray[x:x+w, y:y+h])["label"]
 
                 print('New result found!')
 
