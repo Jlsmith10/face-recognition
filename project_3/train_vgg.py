@@ -113,6 +113,7 @@ def main():
               validation_data=(X_val, Y_val))
 
     # TODO: Save model weights
+    model.save('weights.h5')
     print('model weights saved.')
     return
 

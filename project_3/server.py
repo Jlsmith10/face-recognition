@@ -25,7 +25,7 @@ app = Flask(__name__)
 CORS(app)                               # Allow CORS (Cross Origin Requests)
 
 # TODO: Load the model from the weights file.
-MODEL =  # _______
+MODEL =  load_model(''); """ put model here"""
 
 
 def classify(path_to_image):
@@ -42,12 +42,12 @@ def classify(path_to_image):
     mean_pixel = np.array([104., 117., 123.]).reshape((1, 1, 3))
 
     # TODO: Use opencv to read and resize image to standard dimensions
-    img =  # ______
-    resized_img =  # ______
+    img =  cv2.imread('') """put the image here"""
+    resized_img =  cv2.resize('image',(img_height,img_width));
 
     # TODO: Subtract mean_pixel from the image store the new image in
     # a variable called 'normalized_image'
-    normalized_image =  # ________
+    normalized_image = img - np.mean(img) 
 
     # Turns image shape of (2,) to (1,2)
     image_to_be_classified = np.expand_dims(normalized_image, axis=0)
@@ -57,7 +57,7 @@ def classify(path_to_image):
     # Note: MODEL.predict() returns an array of arrays ie. [[classes]]
     predictions =  # ______
 
-    # TODO: Get the predicted label which is defined as follows:
+    # TODO: Get the predicted label which is defined as foll:ows:
     # Label = the index of the largest value in the prediction array
     # This label is a number, which corresponds to the same number you
     # give to the folder when you organized data
