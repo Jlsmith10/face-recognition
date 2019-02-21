@@ -31,7 +31,8 @@ def request_from_server(img):
     :returns: Returns a dictionary containing label and cofidence.
     """
     # PUBLIC DNS to your server
-    URL = "ec2-52-25-152-42.us-west-2.compute.amazonaws.com"
+    URL = "http://ec2-52-25-152-42.us-west-2.compute.amazonaws.com:8080/predict"
+    # predicts only if POST to /predict
 
     # File name so that it can be temporarily stored.
     temp_image_name = 'temp.jpg'
