@@ -46,14 +46,19 @@ def load_data(src_path):
 
 
 def main():
-    # TODO: load model
+    model = load_model('weight.h5')
 
     # compute test accuracy
-    print 'Load test data:'
+    print('Load test data:')
     X_test, Y_test = load_data(TEST_DIR)
-    # TODO: get accuracy
 
-    return
+    predictions = model.predict(X_test)
+
+    correct = sum(predictions == Y_test)
+
+    percent_correct = 100. * correct / len(Y_test)
+
+    print("Percent accuracy: ", percent_correct)
 
 
 if __name__ == '__main__':
